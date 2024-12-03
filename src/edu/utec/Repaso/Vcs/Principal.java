@@ -13,9 +13,19 @@ public class Principal {
         System.out.println("PARTE 2 --Crea una lista de libros y añade algunos libros a la lista. --");
 
         List<Libro> libros = new ArrayList<>();
-        libros.add(new Libro("1234567890", "El libro de la selva", "Rudyard Kipling", LocalDate.of(1894, 1, 1), 19.99));
-        libros.add(new Libro("0987654321", "Don Quijote de la Mancha", "Miguel de Cervantes", LocalDate.of(1605, 1, 1), 24.99));
-        libros.add(new Libro("1357924680", "Cien años de soledad", "Gabriel García Márquez", LocalDate.of(1967, 1, 1), 29.99));
+        libros.add(new Libro("1234567890", "El libro de la selva", "Rudyard Kipling", LocalDate.of(1894, 1, 1), 19.99, Genero.FICCION));
+        libros.add(new Libro("0987654321", "Don Quijote de la Mancha", "Miguel de Cervantes", LocalDate.of(1605, 1, 1), 24.99, Genero.POLICIAL));
+        libros.add(new Libro("1357924680", "Cien años de soledad", "Gabriel García Márquez", LocalDate.of(1967, 1, 1), 29.99, Genero.COMEDIA));
+
+        // Nuevos elementos cargados en VC2
+        libros.add(new Libro("6357454680", "Crónica de una muerte anunciada", "Gabriel García Márquez", LocalDate.of(1981, 1, 1), 30.99, Genero.COMEDIA));
+        libros.add(new Libro("9345464687", "En agosto nos vemos", "Gabriel García Márquez", LocalDate.of(2024, 1, 1), 30.99, Genero.COMEDIA));
+        libros.add(new Libro("9345464687", "La tregua", "Mario Benedetti", LocalDate.of(1960, 1, 1), 30.99, Genero.FICCION));
+        libros.add(new Libro("9345464687", "La noche de los feos", "Mario Benedetti", LocalDate.of(1984, 1, 1), 30.99, Genero.COMEDIA));
+        libros.add(new Libro("9345464687", "Cuentos de la selva", "Horacio Quiroga", LocalDate.of(1918, 1, 1), 17.99, Genero.FICCION));
+        libros.add(new Libro("9345464687", "El almohadon de plumas", "Horacio Quiroga", LocalDate.of(1917, 1, 1), 10.99, Genero.FICCION));
+        libros.add(new Libro("9345464687", "La gallina degollada", "Horacio Quiroga", LocalDate.of(1917, 1, 1), 15.99, Genero.FICCION));
+
 
         // Mostrar la lista de libros
         System.out.println("La lista de libros esta compuesta por:");
@@ -52,7 +62,32 @@ public class Principal {
 
         List<Libro> ordenadoPorFechaDescendente = ordenarPorFechaDescendente(libros);
         ordenadoPorFechaDescendente.forEach(System.out::println);
+
+        //Parte 3 Vc 2
+        System.out.println();
+        System.out.println("VC 2 Parte 3 - filtrar por genero ");
+
+        List<Libro> librosPorGenero = filtradoPorGenero(libros,Genero.COMEDIA);
+        librosPorGenero.forEach(System.out::println);
+
+        //Parte 3.1 Vc 2
+        System.out.println();
+        System.out.println("Extra Parte 3.1 - filtrar por genero y titulo ");
+
+        List<Libro> LibrosPorGeneroYTitulo = filtradoPorGeneroYTitulo(libros, Genero.FICCION,"El libro de la selva");
+        LibrosPorGeneroYTitulo.forEach(System.out::println);
+
+        //Parte 4 Vc 2
+        System.out.println();
+        System.out.println("Parte 4 - Listar titulos por genero ");
+
+        List<String> TitulosPorGenero = listarTitulosPorGenero(libros, Genero.FICCION);
+        TitulosPorGenero.forEach(System.out::println);
+
+
     }
+
+    //Declaro las funciones:
 
         //Parte 3
     public static List<Libro> filtradoPorAutor (List<Libro> libros, String autor){
@@ -88,5 +123,30 @@ public class Principal {
                 .sorted(Comparator.comparing(Libro::getFechaCreacion).reversed())  //utilizo el reverse para que aplique el orden descendente
                 .collect(Collectors.toList());
     }
+
+    //VC2- Parte 3 Filtrado por Genero
+
+    public static List<Libro> filtradoPorGenero (List<Libro> libros, Genero genero){
+        return libros.stream()
+                .filter(libro -> libro.getGenero().equals(genero))
+                .collect(Collectors.toList());
+    }
+
+    //VC2 - Extra Parte 3.1
+    public static List<Libro> filtradoPorGeneroYTitulo (List<Libro> libros, Genero genero, String titulo ){
+        return libros.stream()
+                .filter(libro -> libro.getGenero().equals(genero) && libro.getTitulo().equals(titulo))
+                .collect(Collectors.toList());
+    }
+
+    //VC2 - Extra Parte 4
+    public static List<String> listarTitulosPorGenero (List<Libro> libros, Genero genero){
+        return libros.stream()
+                .filter(libro -> libro.getGenero().equals(genero))   //filtra por genero
+                .map(Libro::getTitulo)                              // recorre los libros y se queda con el título
+                .collect(Collectors.toList());                      // Collectar la información y crear una nueva lista
+    }
+
+
 
 }

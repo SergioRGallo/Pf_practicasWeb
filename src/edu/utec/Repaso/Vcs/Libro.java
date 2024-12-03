@@ -8,14 +8,16 @@ public class Libro {
     private String autor;
     private LocalDate fechaCreacion;
     private double precio;
+    private Genero genero;
 
 
-    public Libro(String ISBN, String titulo, String autor, LocalDate fechaCreacion, double precio) {
+    public Libro(String ISBN, String titulo, String autor, LocalDate fechaCreacion, double precio, Genero genero) {
         this.ISBN = ISBN;
         this.titulo = titulo;
         this.autor = autor;
         this.precio = precio;
         this.fechaCreacion = fechaCreacion;
+        this.genero = genero;
     }
 
     public String getISBN() {
@@ -58,6 +60,14 @@ public class Libro {
         this.precio = precio;
     }
 
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
     @Override
     public String toString() {
         return "Libro{" +
@@ -66,6 +76,7 @@ public class Libro {
                 ", autor='" + autor + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", precio=" + precio +
+                ", genero=" + genero +
                 '}';
     }
 }
