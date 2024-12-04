@@ -88,9 +88,34 @@ public class Principal {
         Optional<Libro> pimerLibroAutor = primerLibroDeAutor(libros,"Gabriel García Márquez" );
         pimerLibroAutor.ifPresent(System.out::println);
 
+        //Parte 6 Vc 2
+        System.out.println();
+        System.out.println("Parte 6 - Agrupar libros por año ");
+        Map<Integer, List<Libro>> listadoLibrosPoranio = librosPorAnio(libros);
+        listadoLibrosPoranio.forEach((anio, libro) ->
+            {
+                System.out.println("Año " + anio);
+             libro.forEach(System.out::println);
+
+            });
+
+        //Parte 7 Vc 2
+        System.out.println();
+        System.out.println("Parte 7 - Precio promedio por genero ");
+        Map<Genero, Double> precioPromedioPorGenero = precioPromedioPorGenero(libros);
+        precioPromedioPorGenero.forEach((genero, precio) ->
+                System.out.println((genero + ": " + precio)));
+
+
+        //Parte 8 Vc 2
+        System.out.println();
+        System.out.println("Parte 8 - Libros despues de año dado ");
+        List<Libro> librosMayoresAlAnio = librosPorFecha(libros, 1950);
+        librosMayoresAlAnio.forEach(System.out::println);
+
     }
 
-    //Declaro las funciones:
+    ///////////////////////////Declaro las funciones://///////////////////////////////
 
         //Parte 3
     public static List<Libro> filtradoPorAutor (List<Libro> libros, String autor){
@@ -156,5 +181,28 @@ public class Principal {
                 .filter(libro -> libro.getAutor().equals(autor)).findFirst();
 
     }
+
+    //VC2 - Parte 6
+    public static Map<Integer, List<Libro>> librosPorAnio (List<Libro> libros){
+        return libros.stream()
+                .collect(Collectors.groupingBy(libro -> libro.getFechaCreacion().getYear()));
+    }
+
+    //VC2 - Parte 7
+    public static Map<Genero, Double> precioPromedioPorGenero (List<Libro> libros)
+    {
+        return libros.stream()
+                .collect(Collectors.groupingBy(Libro::getGenero,
+                            Collectors.averagingDouble(Libro::getPrecio))
+                );
+    }
+
+    // VC2 - Parte 8
+    public static List<Libro> librosPorFecha (List<Libro> libros, int anio){
+        return libros.stream()
+                .filter(libro -> libro.getFechaCreacion().getYear() > anio)
+                .collect(Collectors.toList());
+    }
+
 
 }
