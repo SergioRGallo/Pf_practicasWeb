@@ -1,9 +1,7 @@
 package edu.utec.Repaso.Vcs;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -84,6 +82,11 @@ public class Principal {
         List<String> TitulosPorGenero = listarTitulosPorGenero(libros, Genero.FICCION);
         TitulosPorGenero.forEach(System.out::println);
 
+        //Parte 5 Vc 2
+        System.out.println();
+        System.out.println("Parte 5 - Primer libro de un autor dado ");
+        Optional<Libro> pimerLibroAutor = primerLibroDeAutor(libros,"Gabriel García Márquez" );
+        pimerLibroAutor.ifPresent(System.out::println);
 
     }
 
@@ -139,7 +142,7 @@ public class Principal {
                 .collect(Collectors.toList());
     }
 
-    //VC2 - Extra Parte 4
+    //VC2 - Parte 4
     public static List<String> listarTitulosPorGenero (List<Libro> libros, Genero genero){
         return libros.stream()
                 .filter(libro -> libro.getGenero().equals(genero))   //filtra por genero
@@ -147,6 +150,11 @@ public class Principal {
                 .collect(Collectors.toList());                      // Collectar la información y crear una nueva lista
     }
 
+    //VC2 - Parte 5
+    public static Optional<Libro> primerLibroDeAutor (List<Libro> libros, String autor){
+        return libros.stream()
+                .filter(libro -> libro.getAutor().equals(autor)).findFirst();
 
+    }
 
 }
